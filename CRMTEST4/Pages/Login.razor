@@ -1,0 +1,63 @@
+﻿@*@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web*@
+
+@inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
+@inject IJSRuntime JSRuntime
+@inject IAuthService AuthService
+@using CRMTEST4.Models
+
+
+@page "/login"
+@layout LoginLayout
+
+
+<h1>Login</h1>
+
+@if (loginFailed)
+{
+    <p class="text-danger">Invalid username or password.</p>
+}
+
+<div class="form-group">
+    <label for="username">Username:</label>
+    <input type="text" id="username" class="form-control" @bind="@Username" />
+</div>
+
+<div class="form-group">
+    <label for="password">Password:</label>
+    <input type="password" id="password" class="form-control" @bind="@Password" />
+</div>
+
+<button class="btn btn-primary" @onclick="LoginAsync">Login</button>
+
+@code {
+    private string Username { get; set; }
+    private string Password { get; set; }
+    private bool loginFailed;
+    private bool IsAuthenticated;
+
+
+    private async Task LoginAsync()
+    {
+        if (Username == "admin" && Password == "admin")
+        {
+            // Navigate to the MapPage if the user is authenticated
+
+            IsAuthenticated = true;
+            AuthService.IsAuthenticated = true;
+            //NavigationManager.NavigateTo("/home", forceLoad: true);
+
+        }
+        else
+        {
+            IsAuthenticated = false;
+            AuthService.IsAuthenticated = false;
+            loginFailed = true;
+        }
+    }
+
+}

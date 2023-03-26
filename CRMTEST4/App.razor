@@ -1,0 +1,67 @@
+﻿@*<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <PageTitle>Not found</PageTitle>
+        <LayoutView Layout="@typeof(MainLayout)">
+            <p role="alert">Sorry, there's nothing at this address.</p>
+        </LayoutView>
+    </NotFound>
+</Router>
+*@
+
+
+
+
+
+@using CRMTEST4.Models
+@using CRMTEST4.Pages
+@inject IAuthService AuthService
+
+<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@((AuthService.IsAuthenticated) ? typeof(MainLayout) : typeof(LoginLayout))" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <PageTitle>Not found</PageTitle>
+        <LayoutView Layout="@typeof(LoginLayout)">
+            <p role="alert">Sorry, there's nothing at this address.</p>
+        </LayoutView>
+    </NotFound>
+</Router>
+
+
+
+
+
+
+
+@*
+@using CRMTEST4.Models
+@using CRMTEST4.Pages
+@inject IAuthService AuthService
+
+<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        @if (AuthService.IsAuthenticated)
+        {
+            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        }
+        else
+        {
+            <RouteView RouteData="@routeData" DefaultLayout="@typeof(LoginLayout)" />
+        }
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <PageTitle>Not found</PageTitle>
+        <LayoutView Layout="@typeof(LoginLayout)">
+            <p role="alert">Sorry, there's nothing at this address.</p>
+        </LayoutView>
+    </NotFound>
+</Router>
+
+*@
